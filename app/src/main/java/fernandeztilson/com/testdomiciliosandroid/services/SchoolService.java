@@ -11,9 +11,18 @@ import retrofit2.http.Path;
  */
 
 public interface SchoolService {
+    /**
+     * Obtenemos un objeto Schools
+     * @return
+     */
     @GET("10yg1t")
     Call<Schools> getSchoolsList();
 
+    /**
+     * Obtenemos un objeto Stops
+     * @param stop
+     * @return
+     */
     @GET("{stop}")
     Call<Stops> getStopsList(@Path("stop") String stop);
 }

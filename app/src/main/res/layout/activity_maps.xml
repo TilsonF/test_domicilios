@@ -3,7 +3,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,15 +14,12 @@
         android:layout_height="match_parent">
 
 
-
-
-
         <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:elevation="10dp"
-            android:id="@+id/relativeLayout">
+            android:elevation="10dp">
 
             <ImageView
                 android:id="@+id/img"
@@ -77,13 +74,12 @@
                 android:id="@+id/back"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_toRightOf="@+id/name"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/ic_arrow_back"
-                 />
+                android:layout_toRightOf="@+id/name"
+                android:src="@drawable/ic_arrow_back" />
         </RelativeLayout>
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -98,9 +94,7 @@
             android:layout_below="@+id/relativeLayout" />
 
 
-
     </RelativeLayout>
-
 
 
     <com.airbnb.lottie.LottieAnimationView

@@ -1,6 +1,7 @@
 package fernandeztilson.com.testdomiciliosandroid.helpers;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
@@ -29,23 +30,35 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class SchoolsHelper {
+    /**
+     * Definimos un objeto SchoolService
+     */
     SchoolService schoolService;
+    /**
+     * Definimos un objeto Schools
+     */
     public static Schools schools;
+    /**
+     * Definimos un objeto Stops
+     */
     public static Stops stops;
+    /**
+     * Definimos una variable String
+     */
     private String urlApi;
 
+    /**
+     * Contructor de la clase Schoolshelper
+     *
+     * @param urlApi
+     */
     public SchoolsHelper(String urlApi) {
         this.urlApi = urlApi;
         try {
-
-
-            // Create connection to REST service
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(urlApi)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-
-            // Create API connection
             this.schoolService = retrofit.create(SchoolService.class);
 
         } catch (UnsupportedOperationException e) {
@@ -53,6 +66,9 @@ public class SchoolsHelper {
         }
     }
 
+    /**
+     * @param mainActivity
+     */
     public void schoolsListCall(final MainActivity mainActivity) {
         try {
             Call<Schools> schoolsCallData = schoolService.getSchoolsList();
@@ -64,8 +80,9 @@ public class SchoolsHelper {
                     Log.e("status code", "" + statusCode);
                     if (!response.isSuccessful()) {
                         mainActivity.cargando.setVisibility(View.GONE);
+                        Snackbar.make(mainActivity.coordinatorLayout, R.string.error_cargar_schools,Snackbar.LENGTH_SHORT).show();
                     } else {
-                        Log.e("moviePopular", response.body().toString());
+                        Log.e("schools", response.body().toString());
                         schools = response.body();
                         mainActivity.schools = schools;
                         mainActivity.init();
@@ -76,15 +93,21 @@ public class SchoolsHelper {
                 @Override
                 public void onFailure(Call<Schools> call, Throwable t) {
                     mainActivity.cargando.setVisibility(View.GONE);
+                    Snackbar.make(mainActivity.coordinatorLayout, R.string.error_cargar_schools,Snackbar.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
             mainActivity.cargando.setVisibility(View.GONE);
+            Snackbar.make(mainActivity.coordinatorLayout, R.string.error_cargar_schools,Snackbar.LENGTH_SHORT).show();
         }
 
     }
 
+    /**
+     * @param mapsActivity
+     * @param stop
+     */
     public void stopsListCall(final MapsActivity mapsActivity, final String stop) {
         String newStop = stop.substring(stop.indexOf("bins/") + 5);
         try {
@@ -132,7 +155,7 @@ public class SchoolsHelper {
                             }
                         };
 
-                        // Simulate a long loading process on application startup.
+                        // Simulamos el proceso de carga
                         Timer timer = new Timer();
                         timer.schedule(task, 4000);
                     }
@@ -142,12 +165,14 @@ public class SchoolsHelper {
                 public void onFailure(Call<Stops> call, Throwable t) {
                     Log.e("onfail stop", t.getMessage());
                     mapsActivity.cargando.setVisibility(View.GONE);
+                    Snackbar.make(mapsActivity.coordinatorLayout, R.string.error_cargar_schools,Snackbar.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("exception stop", e.getMessage());
             mapsActivity.cargando.setVisibility(View.GONE);
+            Snackbar.make(mapsActivity.coordinatorLayout, R.string.error_cargar_schools,Snackbar.LENGTH_SHORT).show();
         }
 
     }

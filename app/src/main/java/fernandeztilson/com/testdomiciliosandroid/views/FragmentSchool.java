@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,36 +21,46 @@ import fernandeztilson.com.testdomiciliosandroid.models.Schools;
  * Created by Tilson on 29/01/2018.
  */
 
-public class FragmentSchool extends Fragment{
-
+public class FragmentSchool extends Fragment {
+    /**
+     * Definimos un objeto Schools
+     */
     private Schools schools;
+    /**
+     * Definimos un objeto OnListFragmentInteractionListener
+     */
     private OnListFragmentInteractionListener interactionListener;
-
-    View view;
+    /**
+     * Definimos un objeto View
+     */
+    private View view;
+    /**
+     * Definimos un objeto ImageView
+     */
     private ImageView ic_btn_back;
+
+    /**
+     * Obtenermos el ciclo de vida onCreateView
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_schools, container, false);
-
         schools = MainActivity.schools;
-
         Context context = view.getContext();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.fragment_schools);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-        //recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        Log.e("movie popular size", schools.toString());
         recyclerView.setAdapter(new ItemRecyclerViewAdapter(schools, interactionListener, context));
-
-        Log.e("popular","yes");
-
         return view;
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * <p/>
+     * Interfaz que puede ser implementada por actividades que contengan este fragmento para activar una interacción
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Schools item);

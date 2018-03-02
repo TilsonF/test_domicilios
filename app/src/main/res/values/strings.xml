@@ -3,4 +3,5 @@
     <string name="schools_api">https://api.myjson.com/bins/</string>
     <string name="title_tab0">Schools</string>
     <string name="title_activity_maps">Map</string>
+    <string name="error_cargar_schools">Error al cargar las rutas :(</string>
 </resources>

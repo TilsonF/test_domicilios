@@ -27,56 +27,91 @@ import fernandeztilson.com.testdomiciliosandroid.views.MapsActivity;
  */
 
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
-
+    /**
+     * Definimos un objeto Schools
+     */
     private final Schools schools;
+    /**
+     * Definimos un objeto Context
+     */
     private Context context;
+    /**
+     * Definimos un objeto FragmentSchool.OnListFragmentInteractionListener
+     */
     private final FragmentSchool.OnListFragmentInteractionListener interactionListener;
 
+    /**.
+     * @param schools
+     * @param listener
+     * @param context
+     */
     public ItemRecyclerViewAdapter(Schools schools, FragmentSchool.OnListFragmentInteractionListener listener, Context context) {
         this.schools = schools;
         interactionListener = listener;
         this.context = context;
     }
 
+    /**
+     * Definimos una clase RecyclerView.ViewHolder
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * Definimos un objeto View
+         */
         public final View mView;
+        /**
+         * Definimos un objeto ImageView
+         */
         public ImageView poster;
+        /**
+         * Definimos un objeto TextView
+         */
         public final TextView titleView;
+        /**
+         * Definimos un objeto LinearLayout
+         */
         public final LinearLayout linearLayout;
+        /**
+         * Definimos un objeto Schools
+         */
         public Schools schools;
 
+        /**
+         * @param view
+         */
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            //idView = (TextView) view.findViewById(R.id.id);
             titleView = (TextView) view.findViewById(R.id.description);
-            //detailView = (TextView) view.findViewById(R.id.detail);
             poster = (ImageView) view.findViewById(R.id.img_url);
             linearLayout = (LinearLayout) view.findViewById(R.id.linear);
         }
     }
 
+    /**
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item_list, parent, false);
-
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_item_list, parent, false);
         ViewHolder myViewHolder = new ViewHolder(view);
-        Log.e("movies viewholder", schools.toString());
         return myViewHolder;
     }
 
+    /**
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.e("position", position + "");
-
         holder.titleView.setText(schools.getSchoolBuses().get(position).getDescription() + "\n" + schools.getSchoolBuses().get(position).getName());
-         String img_url = schools.getSchoolBuses().get(position).getImgUrl();
+        String img_url = schools.getSchoolBuses().get(position).getImgUrl();
         Picasso.with(context)
                 .load(img_url)
                 .into(holder.poster);
-
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,10 +121,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
                 bundle.putString("name", schools.getSchoolBuses().get(position).getName());
                 bundle.putString("description", schools.getSchoolBuses().get(position).getDescription());
                 bundle.putString("img_url", schools.getSchoolBuses().get(position).getImgUrl());
-
                 intent.putExtra("school", bundle);
-
-
                 context.startActivity(intent);
                 if (context instanceof Activity) {
                     ((Activity) context).overridePendingTransition(R.anim.activity_open_enter, R.anim.activity_open_exit);
@@ -100,6 +132,9 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         });
     }
 
+    /**
+     * @return
+     */
     @Override
     public int getItemCount() {
         return schools.getSchoolBuses().size();

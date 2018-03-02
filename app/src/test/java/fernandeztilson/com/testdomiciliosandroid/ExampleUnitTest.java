@@ -1,6 +1,11 @@
 package fernandeztilson.com.testdomiciliosandroid;
 
+import android.util.Log;
+
 import org.junit.Test;
+
+import fernandeztilson.com.testdomiciliosandroid.helpers.SchoolsHelper;
+import fernandeztilson.com.testdomiciliosandroid.views.MainActivity;
 
 import static org.junit.Assert.*;
 
@@ -14,4 +19,6 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
+
 }

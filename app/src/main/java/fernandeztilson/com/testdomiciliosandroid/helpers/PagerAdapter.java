@@ -12,11 +12,24 @@ import fernandeztilson.com.testdomiciliosandroid.views.FragmentSchool;
  */
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
+
+    /**
+     * Definimos una variable int
+     */
     private int numTabs;
+    /**
+     * Definimos un objeto Schools
+     */
     private Schools schools;
 
 
-
+    /**
+     * Contructor de la clase PagerAdapter
+     *
+     * @param fm
+     * @param numTabs
+     * @param schools
+     */
     public PagerAdapter(FragmentManager fm, int numTabs, Schools schools) {
         super(fm);
         this.numTabs = numTabs;
@@ -25,19 +38,28 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     }
 
+    /**
+     * Obtenemos un objeto Fragment
+     *
+     * @param position
+     * @return
+     */
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
                 FragmentSchool tab1 = new FragmentSchool();
                 return tab1;
-
-
             default:
                 throw new RuntimeException("Tab position invalid " + position);
         }
     }
 
+    /**
+     * Obtenemos uana variable int
+     *
+     * @return
+     */
     @Override
     public int getCount() {
         return numTabs;

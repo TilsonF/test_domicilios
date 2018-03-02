@@ -3,6 +3,7 @@ package fernandeztilson.com.testdomiciliosandroid.views;
 import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,51 +21,53 @@ import fernandeztilson.com.testdomiciliosandroid.models.Schools;
 
 public class MainActivity extends AppCompatActivity {
     /**
-     * PagerAdapter for adapter
+     * Definimos un objeto PagerAdapter
      */
     public static PagerAdapter adapter = null;
-
     /**
-     * LinearLayout for bottom_sheet
-     */
-    public static LinearLayout bottom_sheet;
-    /**
-     * TabLayout for tabLayout
+     * Definimos un objeto TabLayout
      */
     public static TabLayout tabLayout = null;
     /**
-     * ViewPager for viewPager
+     * Definimos un objeto ViewPager
      */
     public static ViewPager viewPager = null;
     /**
-     * Schools for schools
+     * Definimos un objeto Schools
      */
     public static Schools schools = null;
+    /**
+     * Definimos un objeto LootieAnimationView
+     */
     public static LottieAnimationView cargando;
+    /**
+     * Definimos un objeto CoordinatorLayout
+     */
+    public static CoordinatorLayout coordinatorLayout;
 
-
+    /**
+     * Obtiene el ciclo de vida onCreate
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         decorView.setSystemUiVisibility(uiOptions);
-
         setContentView(R.layout.activity_main);
-
-        // define TabLayout
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.title_tab0));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        // define ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
-
         cargando = (LottieAnimationView) findViewById(R.id.animation_progress);
         cargando.setVisibility(View.VISIBLE);
 
 
-        /** url for API */
-        String urlApi, api_key;
+        // Obtenemos la url api y lanzamos el ayudando para el consumo
+        String urlApi;
         urlApi = getString(R.string.schools_api);
         SchoolsHelper schoolsHelper = new SchoolsHelper(urlApi);
         try {
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Listener for tab selected
+     * Obtiene el listener del TabLayout
      *
      * @param viewPager
      * @return
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                //Toast.makeText(MainActivity.this, "Tab selected " +  tab.getPosition(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -102,14 +105,12 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-
+    /**
+     * Inicializa el adaptador al viewPager y sus listener
+     */
     public void init() {
-        //  ViewPager need a PagerAdapter
         adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), schools);
-
         viewPager.setAdapter(adapter);
-
-        // Listeners
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(getOnTabSelectedListener(viewPager));
     }
